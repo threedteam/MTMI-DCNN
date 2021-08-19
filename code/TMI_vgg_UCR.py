@@ -1,5 +1,3 @@
-'''Adiac'''
-
 import os, glob, cv2
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 import keras
@@ -132,7 +130,6 @@ for i in range(5):
     plt.ylabel('loss')
     plt.legend()
     plt.show()
-    plt.savefig('loss_keras00.png')
     plt.clf()
     acc = history.history['acc']
     val_acc = history.history['val_acc']
