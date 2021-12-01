@@ -1,6 +1,6 @@
 # MTMI-DCNN
 MTMI-DCNN: A Phase-space-based Method for High-performance Sensor Data Classification
-Public content of the paper:
+Public content of the paper
 
 
 
