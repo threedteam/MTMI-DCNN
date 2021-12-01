@@ -107,6 +107,6 @@ for home, dirs, files in os.walk(data_dir):
             # print(array)
             from PIL import Image
             im = Image.fromarray(np.uint8(array))  # 把array转化成image
-            im = im.convert('RGB')  # 这样才能转为灰度图，如果是彩色图则改L为‘RGB’
+            im = im.convert('RGB')  # 转为灰度图
             print('UCR_TMI/'+dir_name_temp+'/test/' + str(test_data_i) + '.' + str(test_label[test_data_i]) + '.png')
             im.save('UCR_TMI/1num_2/'+dir_name_temp+'/test/' + str(test_data_i) + '.' + str(test_label[test_data_i]) + '.png')
