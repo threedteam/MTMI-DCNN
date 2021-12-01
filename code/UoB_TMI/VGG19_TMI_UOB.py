@@ -1,7 +1,4 @@
-'''keras下的vgg16，CPU
-手动划分训练集和测试集
-所有的层都训练，全部解冻
-'''
+'''keras下的vgg16，所有的层都训练，全部解冻 '''
 import cv2
 import os
 import numpy as np
@@ -27,11 +24,6 @@ def build_model():
     model = models.Sequential()
     model.add(conv_base)  # 添加vgg16网络
     model.add(layers.Flatten())
-    # model_h5.add(layers.Dense(4096, activation='relu'))
-    # model_h5.add(layers.BatchNormalization())
-    # model_h5.add(layers.Dense(2048, activation='relu'))
-    # model_h5.add(layers.Dropout(0.1))
-    # model_h5.add(layers.Dense(1024, activation='relu'))
     # original networks
     model.add(layers.Dense(2048, activation='relu'))
     model.add(layers.BatchNormalization())
@@ -263,110 +255,3 @@ output_re.write("spec_avg" + str(spec_all/5) + '\n')
 output_re.write("auc_avg" + str(auc_all/5) + '\n')
 output_re.close()
 #
-# #记录
-# import time
-# start = time.process_time()
-# # num_epochs = 40
-# callbacks_list = [
-# keras.callbacks.ModelCheckpoint(
-# filepath='TMI_UOB_bestmodel_nok_all_train_conv_epoch_m32_t8.h5',
-# monitor='val_acc',  # 监控指标是精度。如果精度不再变大，则不更新权重，如果精度变大则更新权重
-# save_best_only=True,  # 只保存最好的。
-# )
-# ]
-# model_h5 = build_model()  # 创建网络
-# history = model_h5.fit(img_train, label_train,
-#                     batch_size=16,  # 每批大小
-#                     epochs=1,
-#                     callbacks=callbacks_list,
-#                     validation_data=(img_val, label_val),
-#                     verbose=2
-#                     )
-# print('fit_time=', time.process_time() - start)
-#
-# import matplotlib.pyplot as plt
-# loss = history.history['loss']
-# val_loss = history.history['val_loss']
-# epochs = range(1, len(loss) + 1)
-# plt.plot(epochs, loss, 'bo', label='loss_train') #Training lossValidation loss  scatter plot
-# plt.plot(epochs, val_loss, 'b', label='loss_val')
-# plt.title('loss of data')
-# plt.xlabel('epoch')
-# plt.ylabel('loss')
-# plt.legend()
-# plt.show()
-# plt.clf()
-# acc = history.history['acc']
-# val_acc = history.history['val_acc']
-# plt.plot(epochs, acc, 'bo', label='acc_train')
-# plt.plot(epochs, val_acc, 'b', label='acc_val')
-# plt.title('acc of data')
-# plt.xlabel('epoch')
-# plt.ylabel('acc')
-# plt.legend()
-# plt.show()
-#
-# # test
-# import os, cv2
-# import numpy as np
-# from keras.models import load_model
-# model_h5 = load_model('TMI_UOB_bestmodel_nok_all_train_conv_epoch_m32_t8.h5')
-#
-# # pre = model_h5.predict(test_image)
-# # print(pre)
-# # 画出ROC
-# y_pre_quant = model_h5.predict_proba(test_image)  # [:,1]
-# print('y_pre_quant:', y_pre_quant)
-#
-# from sklearn.metrics import roc_curve,auc
-# import matplotlib.pyplot as plt  # 绘制img
-# fpr, tpr, thresholds = roc_curve(test_label, y_pre_quant)
-# print(fpr)
-# print(tpr)
-# print(thresholds)
-# plt.plot(fpr,tpr,c="b",clip_on=False)  # clip_on 设为false便可以覆盖轴，不被轴挡着
-# # plt.legend(loc='lower right')
-# plt.plot([0,1],[0,1],ls='--',c=".3")
-# plt.xlim([0.0, 1.0])
-# plt.ylim([0.0, 1.0])
-# plt.rcParams['font.size'] = 12
-# plt.title('ROC curve')
-# plt.xlabel('False Positivite Rate (1 - specificity)')
-# plt.ylabel('True Positivite Rate (sensitivite)')
-# plt.grid(True)
-#
-# plt.show()
-# AUC = auc(fpr, tpr)
-#
-# #  计算特异性和灵敏度
-# y_pre_quant[y_pre_quant >= 0.5] = 1
-# y_pre_quant[y_pre_quant <= 0.5] = 0
-# # print(y_pre_quant)
-# # print(test_label)
-#
-# true_positive = 0  # TP
-# false_positive = 0  # FP
-# false_negative = 0  # FN
-# true_negative = 0  # TN
-# for i in range(len(y_pre_quant)):
-#     if(y_pre_quant[i] == 1 and test_label[i]==1):
-#         true_positive = true_positive+1  #
-#     elif(y_pre_quant[i] == 0 and test_label[i]==0):
-#         true_negative = true_negative+1  #
-#     elif(y_pre_quant[i] == 1 and test_label[i]==0):
-#         false_positive = false_positive+1
-#     elif(y_pre_quant[i] == 0 and test_label[i]==1):
-#         false_negative = false_negative+1
-# sensitivity = true_positive / (true_positive + false_negative)
-# specificity = true_negative / (false_positive + true_negative)
-#
-# print("sensitivity:", sensitivity)
-# print("specificity:", specificity)
-# print('AUC=', AUC)
-#
-# score = model_h5.evaluate(test_image, test_label)
-# print(score)
-# output_re.write('loss+test_acc: '+str(score) + '\n')
-# output_re.write('sensitivity+specificity: '+str(sensitivity) +'  \t'+str(specificity)+ '\n')
-# output_re.write('AUC: '+str(AUC) + '\n')
-# output_re.close()
