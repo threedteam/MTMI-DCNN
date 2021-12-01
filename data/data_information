@@ -1,1 +1,3 @@
-They are taken from 60 datasets of UCR archive. For details, see the paper "mtmi-dcnn: a phase space-based method for high performance sensor data classification".
+UCR datasets taken from 60 datasets of UCR archive. For details, see the paper "mtmi-dcnn: a phase space-based method for high performance sensor data classification".
+The University of Bonn, Department of Epileptology, Germany, provides an open-source epileptic EEG dataset. 
+The UOB dataset is available on the paper:"Deep learning approach to detect seizure using reconstructed phase space images".
